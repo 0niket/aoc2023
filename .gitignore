@@ -2,3 +2,4 @@
 .cpcache
 .lsp
 .nrepl-port
+.calva/output-window/output.calva-repl

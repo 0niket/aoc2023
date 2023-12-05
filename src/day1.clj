@@ -1,17 +1,12 @@
 (ns aoc2023.day1
   (:require [clojure.string :as cs]))
 
-(defn part-one 
-  []
-  (->> "resources/day1input.txt"
-       slurp
-       cs/split-lines
-       (map (fn [line]
-              (let [digits (re-seq #"\d" line)
-                    first-digit (first digits)
-                    last-digit (last digits)]
-                (Integer/parseInt (str first-digit last-digit)))))
-       (reduce +)))
+(defn line-to-two-digit-num-part-1
+  [line]
+  (let [digits (re-seq #"\d" line)
+        first-digit (first digits)
+        last-digit (last digits)]
+    (Integer/parseInt (str first-digit last-digit))))
 
 (defn word-to-int
   [s]
@@ -27,7 +22,7 @@
     "nine" 9
     s))
 
-(defn- line-to-two-digit-num
+(defn line-to-two-digit-num-part-2
   [line]
   (let [lc-line (cs/lower-case line)
         digits (re-seq #"\d|one|two|three|four|five|six|seven|eight|nine" lc-line)
@@ -35,10 +30,11 @@
         last-digit (word-to-int (last digits))]
     (Integer/parseInt (str first-digit last-digit))))
 
-(defn part-two 
+(defn solve
   []
   (->> "resources/day1input.txt"
        slurp
        cs/split-lines
-       (map line-to-two-digit-num)
+       ;; Replace function passed with part1 or part2 functions
+       (map line-to-two-digit-num-part-2)
        (reduce + 0)))
