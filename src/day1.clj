@@ -24,12 +24,12 @@
 
 (let [first-digit-re #"\d|one|two|three|four|five|six|seven|eight|nine"
       last-digit-re #".*(\d|one|two|three|four|five|six|seven|eight|nine).*"]
- (defn line-to-two-digit-num-part-2
-  [line]
-  (let [lc-line (cs/lower-case line)
-        first-digit (word-to-int (re-find first-digit-re lc-line))
-        last-digit (word-to-int (second (re-find last-digit-re lc-line)))]
-    (Integer/parseInt (str first-digit last-digit)))))
+  (defn line-to-two-digit-num-part-2
+    [line]
+    (let [lc-line (cs/lower-case line)
+          first-digit (word-to-int (re-find first-digit-re lc-line))
+          last-digit (word-to-int (second (re-find last-digit-re lc-line)))]
+      (Integer/parseInt (str first-digit last-digit)))))
 
 (defn solve
   []
