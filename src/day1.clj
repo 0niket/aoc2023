@@ -22,13 +22,14 @@
     "nine" 9
     s))
 
-(defn line-to-two-digit-num-part-2
+(let [first-digit-re #"\d|one|two|three|four|five|six|seven|eight|nine"
+      last-digit-re #".*(\d|one|two|three|four|five|six|seven|eight|nine).*"]
+ (defn line-to-two-digit-num-part-2
   [line]
   (let [lc-line (cs/lower-case line)
-        digits (re-seq #"\d|one|two|three|four|five|six|seven|eight|nine" lc-line)
-        first-digit (word-to-int (first digits))
-        last-digit (word-to-int (last digits))]
-    (Integer/parseInt (str first-digit last-digit))))
+        first-digit (word-to-int (re-find first-digit-re lc-line))
+        last-digit (word-to-int (second (re-find last-digit-re lc-line)))]
+    (Integer/parseInt (str first-digit last-digit)))))
 
 (defn solve
   []
