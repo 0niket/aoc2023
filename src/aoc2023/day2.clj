@@ -29,9 +29,22 @@
     {:game-id game-number
      :subrounds subrounds}))
 
+(defn possible-subround? 
+  [condition subround]
+  (and (< (get subround "red") (get condition "red"))
+       (< (get subround "green") (get condition "green"))
+       (< (get subround "blue") (get condition "blue"))))
+
+(defn possible-game? 
+  [condition game]
+  (every? #(possible-subround? condition %) (:subrounds game)))
+
 (defn solve
-  []
+  [condition]
   (->> "resources/day2input.txt"
        slurp
        cs/split-lines
-       (map line->game-ds)))
+       (map line->game-ds)
+       (filter #(possible-game? condition %))
+       (map :game-id)
+       (reduce +)))
