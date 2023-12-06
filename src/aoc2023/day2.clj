@@ -17,7 +17,8 @@
            (apply
             hash-map
             (mapcat (fn [ys]
-                     (reverse (cs/split (cs/trim ys) #" ")))
+                      (let [cube (cs/split (cs/trim ys) #" ")]
+                        [(keyword (second cube)) (Integer/parseInt (first cube))]))
                    xs)))
          s)))
 
@@ -31,9 +32,9 @@
 
 (defn possible-subround? 
   [condition subround]
-  (and (< (get subround "red") (get condition "red"))
-       (< (get subround "green") (get condition "green"))
-       (< (get subround "blue") (get condition "blue"))))
+  (and (<= (get subround :red 0) (:red condition))
+       (<= (get subround :green 0) (:green condition))
+       (<= (get subround :blue 0) (:blue condition))))
 
 (defn possible-game? 
   [condition game]
@@ -45,6 +46,6 @@
        slurp
        cs/split-lines
        (map line->game-ds)
-       (filter #(possible-game? condition %))
+       (filter (fn [game] (possible-game? condition game)))
        (map :game-id)
        (reduce +)))
