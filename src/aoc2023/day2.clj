@@ -40,7 +40,7 @@
   [condition game]
   (every? #(possible-subround? condition %) (:subrounds game)))
 
-(defn solve
+(defn solve-part-1
   [condition]
   (->> "resources/day2input.txt"
        slurp
@@ -48,4 +48,25 @@
        (map line->game-ds)
        (filter (fn [game] (possible-game? condition game)))
        (map :game-id)
+       (reduce +)))
+
+(defn cube-count-seq-per-subrounds
+  [subrounds color]
+  (filter 
+   (complement nil?) 
+   (map color subrounds)))
+
+(defn power-of-minimum-cube-set 
+  [{:keys [subrounds]}]
+  (* (apply max (cube-count-seq-per-subrounds subrounds :red))
+     (apply max (cube-count-seq-per-subrounds subrounds :green))
+     (apply max (cube-count-seq-per-subrounds subrounds :blue))))
+
+(defn solve-part-2
+  []
+  (->> "resources/day2input.txt"
+       slurp
+       cs/split-lines
+       (map line->game-ds)
+       (map power-of-minimum-cube-set)
        (reduce +)))
