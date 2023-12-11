@@ -30,3 +30,29 @@
        set)
   )
 (def symbols #{"=" "*" "%" "/" "-" "&" "#" "+" "$" "@"})
+
+(def lines (-> "resources/day3input.txt"
+               slurp
+               cs/split-lines))
+
+;; sample numbers ds
+(def numbers 
+  [{:number 123
+    :start-x 1
+    :end-x 4
+    :y 1}])
+
+(defn file-input->lines
+  []
+  (->> "resources/day3input.txt"
+       slurp
+       cs/split-lines))
+
+(defn line->ds [line line-number]
+  (let [numbers (re-seq #"\d+" line)]
+    (map (fn [number]
+           (let [s-number (str number)])
+           )
+         numbers)
+    )
+  )
