@@ -1,7 +1,7 @@
 (ns aoc2023.day4
   (:require [clojure.string :as cs]))
 
-(defn input-file->lines 
+(defn input-file->lines
   []
   (->> "resources/day4input.txt"
        slurp
@@ -35,5 +35,20 @@
 (defn line->matching-numbers
   [line]
   (let [winning-numbers (line->winning-numbers line)
-        your-numbers (line->your-numbers line)])
-  )
+        your-numbers (line->your-numbers line)]
+    (filter (fn [n] (some #(= % n) winning-numbers))
+            your-numbers)))
+
+(defn line->points
+  [line]
+  (->> line
+       line->matching-numbers
+       rest
+       (map (fn [_] 2))
+       (reduce *)))
+
+(defn solve-part-1
+  []
+  (->> (input-file->lines)
+       (map line->points)
+       (reduce +)))
