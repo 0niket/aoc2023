@@ -7,7 +7,7 @@
        slurp
        cs/split-lines))
 
-(defn line->winning-numbers 
+(defn line->winning-numbers
   [line]
   (let [colon-index (cs/last-index-of line ":")
         bar-index (cs/last-index-of line "|")
@@ -41,11 +41,15 @@
 
 (defn line->points
   [line]
-  (->> line
-       line->matching-numbers
-       rest
-       (map (fn [_] 2))
-       (reduce *)))
+  (let [matching-numbers (line->matching-numbers line)
+        matching-numbers-count (count matching-numbers)]
+    (cond
+      (> matching-numbers-count 1) (->> matching-numbers
+                                        rest
+                                        (map (fn [_] 2))
+                                        (reduce *))
+      (= matching-numbers-count 1) 1
+      :else 0)))
 
 (defn solve-part-1
   []
