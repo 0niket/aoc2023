@@ -56,3 +56,28 @@
   (->> (input-file->lines)
        (map line->points)
        (reduce +)))
+
+(defn solve-part-2
+  []
+  (let [lines (input-file->lines)
+        card-instances (-> lines
+                           count
+                           (repeat 0)
+                           vec)
+        matching-numbers-count (map (comp count line->matching-numbers) lines)
+        ]
+    matching-numbers-count))
+
+;; If first 5 numbers are [7 10 0 10 5]
+;; then the sum would be 12 and it will be calculated in following way:
+;; => [1 1 1 1 1]
+;; => [1 2 2 2 2]
+;; => [1 2 2 2 2]
+;; => [1 2 2 3 3]
+;; => [1 2 2 3 4]
+;; Possible approch would be to use reduce on card-instances and matching 
+;; numbers count.
+;; Second approach would be to do it in 2 phases.
+;; First is to process and spread the count across the card-instances
+;; Second is to reduce it with +.
+
